@@ -99,6 +99,7 @@ class _MyHomePageState extends State<MyHomePage> {
               volHidden: true,
               // secondaryStateLi: _secondaryStateLi.toSet(),
               fixedLength: 4,
+              verticalTextAlignment: VerticalTextAlignment.right,
               timeFormat: TimeFormat.YEAR_MONTH_DAY,
               infoDialogBuilder: (context, entity) => Container(
                 padding: const EdgeInsets.all(10),
