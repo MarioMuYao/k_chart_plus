@@ -1,6 +1,5 @@
 import 'dart:async' show StreamSink;
 import 'package:flutter/material.dart';
-import 'package:k_chart_plus/utils/number_util.dart';
 import '../entity/info_window_entity.dart';
 import '../entity/k_line_entity.dart';
 import '../utils/date_format_util.dart';
@@ -257,7 +256,7 @@ class ChartPainter extends BaseChartPainter {
     var index = calculateSelectedX(selectX);
     KLineEntity point = getItem(index);
 
-    TextPainter tp = getTextPainter(point.close, chartColors.crossTextColor);
+    TextPainter tp = getTextPainter(point.close.toStringAsFixed(fixedLength), chartColors.crossTextColor);
     double textHeight = tp.height;
     double textWidth = tp.width;
 
