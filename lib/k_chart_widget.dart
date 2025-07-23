@@ -217,7 +217,7 @@ class _KChartWidgetState extends State<KChartWidget> with TickerProviderStateMix
           },
           onScaleUpdate: (details) {
             if (isDrag || isLongPress) return;
-            mScaleX = (_lastScale * details.scale).clamp(0.1, 20.0);
+            mScaleX = (_lastScale * details.scale).clamp(0.1, 3.0);
             notifyChanged();
           },
           onScaleEnd: (_) {
