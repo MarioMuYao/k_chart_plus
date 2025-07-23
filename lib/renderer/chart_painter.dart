@@ -66,7 +66,7 @@ class ChartPainter extends BaseChartPainter {
     isOnTap,
     isTapShowInfoDialog,
     required this.verticalTextAlignment,
-    mainState,
+    mainStateLi,
     volHidden,
     secondaryStateLi,
     bool isLine = false,
@@ -83,7 +83,7 @@ class ChartPainter extends BaseChartPainter {
             isOnTap: isOnTap,
             isTapShowInfoDialog: isTapShowInfoDialog,
             selectX: selectX,
-            mainState: mainState,
+            mainStateLi: mainStateLi,
             volHidden: volHidden,
             secondaryStateLi: secondaryStateLi,
             xFrontPadding: xFrontPadding,
@@ -106,15 +106,14 @@ class ChartPainter extends BaseChartPainter {
   void initChartRenderer() {
     // if (datas != null && datas!.isNotEmpty) {
     //   var t = datas![0];
-    //   fixedLength =
-    //       NumberUtil.getMaxDecimalLength(t.open, t.close, t.high, t.low);
+    //   fixedLength = NumberUtil.getMaxDecimalLength(t.open, t.close, t.high, t.low);
     // }
     mMainRenderer = MainRenderer(
       mMainRect,
       mMainMaxValue,
       mMainMinValue,
       mTopPadding,
-      mainState,
+      mainStateLi.toList(),
       isLine,
       fixedLength,
       this.chartStyle,
@@ -254,8 +253,10 @@ class ChartPainter extends BaseChartPainter {
   @override
   void drawCrossLineText(Canvas canvas, Size size) {
     var index = calculateSelectedX(selectX);
-    KLineEntity point = getItem(index);
-
+    KLineEntity? point = getItem(index);
+    if (point == null) {
+      return;
+    }
     TextPainter tp = getTextPainter(point.close.toStringAsFixed(fixedLength), chartColors.crossTextColor);
     double textHeight = tp.height;
     double textWidth = tp.width;
@@ -321,7 +322,10 @@ class ChartPainter extends BaseChartPainter {
     //Long press to display the data in the press
     if (isLongPress || (isTapShowInfoDialog && isOnTap)) {
       var index = calculateSelectedX(selectX);
-      data = getItem(index);
+      KLineEntity? point = getItem(index);
+      if (point != null) {
+        data = point;
+      }
     }
     //Release to display the last data
     mMainRenderer.drawText(canvas, data, x);
@@ -367,7 +371,7 @@ class ChartPainter extends BaseChartPainter {
       return;
     }
 
-    double value = datas!.last.close;
+    double value = datas!.lastOrNull?.close ?? 0;
     double y = getMainY(value);
 
     //view display area boundary value drawing
@@ -380,7 +384,8 @@ class ChartPainter extends BaseChartPainter {
     }
 
     nowPricePaint
-      ..color = value >= datas!.last.open ? this.chartColors.nowPriceUpColor : this.chartColors.nowPriceDnColor;
+      ..color =
+          value >= (datas!.lastOrNull?.open ?? 0) ? this.chartColors.nowPriceUpColor : this.chartColors.nowPriceDnColor;
     //first draw the horizontal line
     double startX = 0;
     final max = -mTranslateX + mWidth / scaleX;
@@ -470,7 +475,10 @@ class ChartPainter extends BaseChartPainter {
   ///draw cross lines
   void drawCrossLine(Canvas canvas, Size size) {
     var index = calculateSelectedX(selectX);
-    KLineEntity point = getItem(index);
+    KLineEntity? point = getItem(index);
+    if (point == null) {
+      return;
+    }
     Paint paintY = Paint()
       ..color = this.chartColors.vCrossColor
       ..strokeWidth = this.chartStyle.vCrossWidth

@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, this.title}) : super(key: key);
+  const MyHomePage({super.key, this.title});
 
   final String? title;
 
@@ -34,7 +34,7 @@ class _MyHomePageState extends State<MyHomePage> {
   List<KLineEntity>? datas;
   bool showLoading = true;
   bool _volHidden = false;
-  MainState _mainState = MainState.MA;
+  final List<MainState> _mainStateLi = [];
   // final Set<SecondaryState> _secondaryStateLi = <SecondaryState>{};
   final List<SecondaryState> _secondaryStateLi = [];
   List<DepthEntity>? _bids, _asks;
@@ -87,7 +87,7 @@ class _MyHomePageState extends State<MyHomePage> {
       body: ListView(
         shrinkWrap: true,
         children: <Widget>[
-          const SafeArea(bottom: false, child: SizedBox(height: 10)),
+          const SafeArea(bottom: false, child: SizedBox(height: 200)),
           Stack(children: <Widget>[
             KChartWidget(
               datas,
@@ -95,7 +95,7 @@ class _MyHomePageState extends State<MyHomePage> {
               chartColors,
               mBaseHeight: 360,
               isTrendLine: false,
-              mainState: MainState.NONE,
+              mainStateLi: _mainStateLi.toSet(),
               volHidden: true,
               // secondaryStateLi: _secondaryStateLi.toSet(),
               fixedLength: 4,
@@ -122,6 +122,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  // ignore: unused_element
   Widget _buildTitle(BuildContext context, String title) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 20, 12, 15),
@@ -160,11 +161,18 @@ class _MyHomePageState extends State<MyHomePage> {
         spacing: 10,
         runSpacing: 10,
         children: MainState.values.map((e) {
+          bool isActive = _mainStateLi.contains(e);
           return _buildButton(
             context: context,
             title: e.name,
-            isActive: _mainState == e,
-            onPress: () => _mainState = e,
+            isActive: isActive,
+            onPress: () {
+              if (isActive) {
+                _mainStateLi.remove(e);
+              } else {
+                _mainStateLi.add(e);
+              }
+            },
           );
         }).toList(),
       ),
@@ -205,11 +213,11 @@ class _MyHomePageState extends State<MyHomePage> {
   }) {
     late Color? bgColor, txtColor;
     if (isActive) {
-      bgColor = Theme.of(context).primaryColor.withOpacity(.15);
+      bgColor = Theme.of(context).primaryColor.withAlpha((255 * 0.15).round());
       txtColor = Theme.of(context).primaryColor;
     } else {
       bgColor = Colors.transparent;
-      txtColor = Theme.of(context).textTheme.bodyMedium?.color?.withOpacity(.75);
+      txtColor = Theme.of(context).textTheme.bodyMedium?.color?.withAlpha((255 * 0.75).round());
     }
     return InkWell(
       onTap: () {
@@ -239,10 +247,10 @@ class _MyHomePageState extends State<MyHomePage> {
     //final Future<String> future = getChatDataFromJson();
     future.then((String result) {
       solveChatData(result);
-    }).catchError((_) {
+    }).catchError((e) {
       showLoading = false;
       setState(() {});
-      debugPrint('### datas error $_');
+      debugPrint('### datas error $e');
     });
   }
 

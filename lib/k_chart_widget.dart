@@ -5,10 +5,9 @@ import 'package:k_chart_plus/components/popup_info_view.dart';
 import 'package:k_chart_plus/k_chart_plus.dart';
 import 'renderer/base_dimension.dart';
 
-enum MainState { MA, BOLL, NONE }
+enum MainState { MA, BOLL, SAR }
 
-// enum SecondaryState { MACD, KDJ, RSI, WR, CCI, NONE }
-enum SecondaryState { MACD, KDJ, RSI, WR, CCI } //no support NONE
+enum SecondaryState { MACD, KDJ, RSI, WR, CCI }
 
 class TimeFormat {
   static const List<String> YEAR_MONTH_DAY = [yyyy, '-', mm, '-', dd];
@@ -17,7 +16,7 @@ class TimeFormat {
 
 class KChartWidget extends StatefulWidget {
   final List<KLineEntity>? datas;
-  final MainState mainState;
+  final Set<MainState> mainStateLi;
   final bool volHidden;
   final Set<SecondaryState> secondaryStateLi;
   // final Function()? onSecondaryTap;
@@ -31,6 +30,7 @@ class KChartWidget extends StatefulWidget {
   final List<String> timeFormat;
   final double mBaseHeight;
   final Widget? Function(BuildContext context, KLineEntity entity)? infoDialogBuilder;
+
   // It will be called when the screen scrolls to the end.
   // If true, it will be scrolled to the end of the right side of the screen.
   // If it is false, it will be scrolled to the end of the left side of the screen.
@@ -54,7 +54,7 @@ class KChartWidget extends StatefulWidget {
     this.chartColors, {
     required this.isTrendLine,
     this.xFrontPadding = 100,
-    this.mainState = MainState.MA,
+    this.mainStateLi = const <MainState>{},
     this.secondaryStateLi = const <SecondaryState>{},
     // this.onSecondaryTap,
     this.volHidden = false,
@@ -132,6 +132,7 @@ class _KChartWidgetState extends State<KChartWidget> with TickerProviderStateMix
       mBaseHeight: widget.mBaseHeight,
       volHidden: widget.volHidden,
       secondaryStateLi: widget.secondaryStateLi,
+      mainStateLi: widget.mainStateLi,
     );
     final _painter = ChartPainter(
       widget.chartStyle,
@@ -149,7 +150,7 @@ class _KChartWidgetState extends State<KChartWidget> with TickerProviderStateMix
       isLongPass: isLongPress,
       isOnTap: isOnTap,
       isTapShowInfoDialog: widget.isTapShowInfoDialog,
-      mainState: widget.mainState,
+      mainStateLi: widget.mainStateLi,
       volHidden: widget.volHidden,
       secondaryStateLi: widget.secondaryStateLi,
       isLine: widget.isLine,
@@ -216,7 +217,7 @@ class _KChartWidgetState extends State<KChartWidget> with TickerProviderStateMix
           },
           onScaleUpdate: (details) {
             if (isDrag || isLongPress) return;
-            mScaleX = (_lastScale * details.scale).clamp(0.5, 2.2);
+            mScaleX = (_lastScale * details.scale).clamp(0.1, 20.0);
             notifyChanged();
           },
           onScaleEnd: (_) {

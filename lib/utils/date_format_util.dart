@@ -348,7 +348,7 @@ const List<String> dayShort = const [
   'Thur',
   'Fri',
   'Sat',
-  'Sun'
+  'Sun',
 ];
 
 const List<String> dayLong = const [
@@ -358,8 +358,7 @@ const List<String> dayLong = const [
   'Thursday',
   'Friday',
   'Saturday',
-  'Sunday'
+  'Sunday',
 ];
 
-int dayInYear(DateTime date) =>
-    date.difference(DateTime(date.year, 1, 1)).inDays;
+int dayInYear(DateTime date) => date.difference(DateTime(date.year, 1, 1)).inDays;

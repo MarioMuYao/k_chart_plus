@@ -38,6 +38,9 @@ class ChartColors {
   Color jColor;
   Color rsiColor;
 
+  Color sarColor;
+  Color avgColor;
+
   /// default text color: apply for text at grid
   Color defaultTextColor;
 
@@ -124,6 +127,8 @@ class ChartColors {
     this.nowPriceUpColor = const Color(0xFF14AD8F),
     this.nowPriceDnColor = const Color(0xFFD5405D),
     this.nowPriceTextColor = const Color(0xffffffff),
+    this.sarColor = const Color(0xffE5B767),
+    this.avgColor = const Color(0xff82878e),
 
     /// trend color
     this.trendLineColor = const Color(0xFFF89215),
@@ -159,7 +164,7 @@ class ChartColors {
 }
 
 class ChartStyle {
-  double topPadding = 30.0;
+  double topPadding = 20.0;
 
   double bottomPadding = 20.0;
 
