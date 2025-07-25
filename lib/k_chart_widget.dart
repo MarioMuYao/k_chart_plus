@@ -29,7 +29,7 @@ class KChartWidget extends StatefulWidget {
   final List<String> timeFormat;
   final double mBaseHeight;
   final Widget? Function(BuildContext context, KLineEntity entity)? infoDialogBuilder;
-  final String Function(KLineEntity entity)? dateFormatter;
+  final String Function(KLineEntity entity, bool isCrossLine)? dateFormatter;
   // It will be called when the screen scrolls to the end.
   // If true, it will be scrolled to the end of the right side of the screen.
   // If it is false, it will be scrolled to the end of the left side of the screen.

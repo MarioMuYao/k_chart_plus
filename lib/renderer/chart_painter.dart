@@ -48,7 +48,7 @@ class ChartPainter extends BaseChartPainter {
   final bool showNowPrice;
   final VerticalTextAlignment verticalTextAlignment;
   final BaseDimension baseDimension;
-  final String Function(KLineEntity entity)? dateFormatter;
+  final String Function(KLineEntity entity, bool isCrossLine)? dateFormatter;
 
   ChartPainter(
     this.chartStyle,
@@ -230,7 +230,7 @@ class ChartPainter extends BaseChartPainter {
 
         if (datas?[index] == null) continue;
         TextPainter tp = getTextPainter(
-            dateFormatter?.call(datas![index]) ??
+            dateFormatter?.call(datas![index], false) ??
                 getDate(
                   datas![index].dateTime,
                 ),
@@ -292,7 +292,7 @@ class ChartPainter extends BaseChartPainter {
     }
 
     TextPainter dateTp =
-        getTextPainter(dateFormatter?.call(point) ?? getDate(point.dateTime), chartColors.crossTextColor);
+        getTextPainter(dateFormatter?.call(point, true) ?? getDate(point.dateTime), chartColors.crossTextColor);
     textWidth = dateTp.width;
     r = textHeight / 2;
     x = translateXtoX(getX(index));
