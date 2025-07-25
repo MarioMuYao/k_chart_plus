@@ -96,8 +96,8 @@ abstract class BaseChartPainter extends CustomPainter {
       return;
     }
 
-    int firstTime = datas?.firstOrNull?.time ?? 0;
-    int secondTime = ((datas?.length ?? 0) > 1 ? datas?.elementAt(1).time : null) ?? 0;
+    int firstTime = datas?.firstOrNull?.dateTime?.millisecondsSinceEpoch ?? 0;
+    int secondTime = ((datas?.length ?? 0) > 1 ? datas?.elementAt(1).dateTime?.millisecondsSinceEpoch : null) ?? 0;
     int time = secondTime - firstTime;
     time ~/= 1000;
     // monthly line

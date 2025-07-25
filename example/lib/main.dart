@@ -106,7 +106,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Text('时间：${entity.time}'),
+                    Text('时间：${entity.dateTime}'),
                     Text('开盘：${entity.open}'),
                     Text('收盘：${entity.close}'),
                     Text('最高：${entity.high}'),

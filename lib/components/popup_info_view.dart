@@ -51,7 +51,7 @@ class PopupInfoView extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
-        _buildItem(chartTranslations.date, getDate(entity.time)),
+        _buildItem(chartTranslations.date, getDate(entity.dateTime)),
         _buildItem(chartTranslations.open, entity.open.toStringAsFixed(fixedLength)),
         _buildItem(chartTranslations.high, entity.high.toStringAsFixed(fixedLength)),
         _buildItem(chartTranslations.low, entity.low.toStringAsFixed(fixedLength)),
@@ -98,8 +98,5 @@ class PopupInfoView extends StatelessWidget {
     return materialInfoDialog ? Material(color: Colors.transparent, child: infoWidget) : infoWidget;
   }
 
-  String getDate(int? date) => dateFormat(
-        DateTime.fromMillisecondsSinceEpoch(date ?? DateTime.now().millisecondsSinceEpoch),
-        timeFormat,
-      );
+  String getDate(DateTime? date) => dateFormat(date ?? DateTime.now(), timeFormat);
 }
