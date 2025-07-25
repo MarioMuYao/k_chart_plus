@@ -48,6 +48,7 @@ class ChartPainter extends BaseChartPainter {
   final bool showNowPrice;
   final VerticalTextAlignment verticalTextAlignment;
   final BaseDimension baseDimension;
+  final String Function(KLineEntity entity)? dateBuilder;
 
   ChartPainter(
     this.chartStyle,
@@ -74,6 +75,7 @@ class ChartPainter extends BaseChartPainter {
     this.showNowPrice = true,
     this.fixedLength = 2,
     this.maDayList = const [5, 10, 20],
+    this.dateBuilder,
   }) : super(chartStyle,
             datas: datas,
             scaleX: scaleX,
@@ -228,9 +230,10 @@ class ChartPainter extends BaseChartPainter {
 
         if (datas?[index] == null) continue;
         TextPainter tp = getTextPainter(
-            getDate(
-              datas![index].dateTime,
-            ),
+            dateBuilder?.call(datas![index]) ??
+                getDate(
+                  datas![index].dateTime,
+                ),
             null);
         y = size.height - (mBottomPadding - tp.height) / 2 - tp.height;
         x = columnSpace * i - tp.width / 2;
@@ -240,17 +243,6 @@ class ChartPainter extends BaseChartPainter {
         tp.paint(canvas, Offset(x, y));
       }
     }
-
-//    double translateX = xToTranslateX(0);
-//    if (translateX >= startX && translateX <= stopX) {
-//      TextPainter tp = getTextPainter(getDate(datas[mStartIndex].id));
-//      tp.paint(canvas, Offset(0, y));
-//    }
-//    translateX = xToTranslateX(size.width);
-//    if (translateX >= startX && translateX <= stopX) {
-//      TextPainter tp = getTextPainter(getDate(datas[mStopIndex].id));
-//      tp.paint(canvas, Offset(size.width - tp.width, y));
-//    }
   }
 
   /// draw the cross line. when user focus
@@ -299,7 +291,8 @@ class ChartPainter extends BaseChartPainter {
       tp.paint(canvas, Offset(x + w1 + w2, y - textHeight / 2));
     }
 
-    TextPainter dateTp = getTextPainter(getDate(point.dateTime), chartColors.crossTextColor);
+    TextPainter dateTp =
+        getTextPainter(dateBuilder?.call(point) ?? getDate(point.dateTime), chartColors.crossTextColor);
     textWidth = dateTp.width;
     r = textHeight / 2;
     x = translateXtoX(getX(index));
