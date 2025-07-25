@@ -48,7 +48,7 @@ class ChartPainter extends BaseChartPainter {
   final bool showNowPrice;
   final VerticalTextAlignment verticalTextAlignment;
   final BaseDimension baseDimension;
-  final String Function(KLineEntity entity)? dateBuilder;
+  final String Function(KLineEntity entity)? dateFormatter;
 
   ChartPainter(
     this.chartStyle,
@@ -75,7 +75,7 @@ class ChartPainter extends BaseChartPainter {
     this.showNowPrice = true,
     this.fixedLength = 2,
     this.maDayList = const [5, 10, 20],
-    this.dateBuilder,
+    this.dateFormatter,
   }) : super(chartStyle,
             datas: datas,
             scaleX: scaleX,
@@ -230,7 +230,7 @@ class ChartPainter extends BaseChartPainter {
 
         if (datas?[index] == null) continue;
         TextPainter tp = getTextPainter(
-            dateBuilder?.call(datas![index]) ??
+            dateFormatter?.call(datas![index]) ??
                 getDate(
                   datas![index].dateTime,
                 ),
@@ -292,7 +292,7 @@ class ChartPainter extends BaseChartPainter {
     }
 
     TextPainter dateTp =
-        getTextPainter(dateBuilder?.call(point) ?? getDate(point.dateTime), chartColors.crossTextColor);
+        getTextPainter(dateFormatter?.call(point) ?? getDate(point.dateTime), chartColors.crossTextColor);
     textWidth = dateTp.width;
     r = textHeight / 2;
     x = translateXtoX(getX(index));

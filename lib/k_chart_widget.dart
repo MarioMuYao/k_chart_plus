@@ -29,7 +29,7 @@ class KChartWidget extends StatefulWidget {
   final List<String> timeFormat;
   final double mBaseHeight;
   final Widget? Function(BuildContext context, KLineEntity entity)? infoDialogBuilder;
-  final String Function(KLineEntity entity)? dateBuilder;
+  final String Function(KLineEntity entity)? dateFormatter;
   // It will be called when the screen scrolls to the end.
   // If true, it will be scrolled to the end of the right side of the screen.
   // If it is false, it will be scrolled to the end of the left side of the screen.
@@ -66,7 +66,7 @@ class KChartWidget extends StatefulWidget {
     this.chartTranslations = const ChartTranslations(),
     this.timeFormat = TimeFormat.YEAR_MONTH_DAY,
     this.infoDialogBuilder,
-    this.dateBuilder,
+    this.dateFormatter,
     this.onLoadMore,
     this.fixedLength = 2,
     this.maDayList = const [5, 10, 20],
@@ -159,7 +159,7 @@ class _KChartWidgetState extends State<KChartWidget> with TickerProviderStateMix
       fixedLength: widget.fixedLength,
       maDayList: widget.maDayList,
       verticalTextAlignment: widget.verticalTextAlignment,
-      dateBuilder: widget.dateBuilder,
+      dateFormatter: widget.dateFormatter,
     );
 
     return LayoutBuilder(
