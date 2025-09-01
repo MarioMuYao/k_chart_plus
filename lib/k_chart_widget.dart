@@ -337,10 +337,8 @@ class _KChartWidgetState extends State<KChartWidget> with TickerProviderStateMix
     return StreamBuilder<InfoWindowEntity?>(
       stream: mInfoWindowStream.stream,
       builder: (context, snapshot) {
-        if ((!isLongPress && !isOnTap) ||
-            widget.isLine == true ||
-            !snapshot.hasData ||
-            snapshot.data?.kLineEntity == null) return const SizedBox.shrink();
+        if ((!isLongPress && !isOnTap) || !snapshot.hasData || snapshot.data?.kLineEntity == null)
+          return const SizedBox.shrink();
         KLineEntity entity = snapshot.data!.kLineEntity;
         final dialogWidth = mWidth / 3;
         return Positioned(
