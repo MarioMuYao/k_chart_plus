@@ -356,6 +356,26 @@ abstract class BaseChartPainter extends CustomPainter {
   /// @param position index value
   double getX(int position) => position * mPointWidth + mPointWidth / 2;
 
+  KLineEntity? getPreviousItem(int position) {
+    if (datas != null && position >= 0 && position < datas!.length) {
+      KLineEntity data = datas![position];
+      DateTime? dateTime = data.dateTime;
+      if (dateTime != null) {
+        for (int i = position - 1; i >= 0; i--) {
+          KLineEntity entity = datas![i];
+          DateTime? dt = entity.dateTime;
+          if (dt == null) {
+            continue;
+          }
+          if (dt.day < dateTime.day) {
+            return entity;
+          }
+        }
+      }
+    }
+    return null;
+  }
+
   KLineEntity? getItem(int position) {
     if (datas != null && position >= 0 && position < datas!.length) {
       return datas![position];
