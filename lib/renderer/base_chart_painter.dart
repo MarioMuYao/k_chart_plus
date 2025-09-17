@@ -357,11 +357,10 @@ abstract class BaseChartPainter extends CustomPainter {
   double getX(int position) => position * mPointWidth + mPointWidth / 2;
 
   KLineEntity? getItem(int position) {
-    if (datas != null) {
+    if (datas != null && position >= 0 && position < datas!.length) {
       return datas![position];
-    } else {
-      return null;
     }
+    return null;
   }
 
   /// scrollX convert to TranslateX

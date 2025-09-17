@@ -28,7 +28,7 @@ class KChartWidget extends StatefulWidget {
   final ChartTranslations chartTranslations;
   final List<String> timeFormat;
   final double mBaseHeight;
-  final Widget? Function(BuildContext context, KLineEntity entity)? infoDialogBuilder;
+  final Widget? Function(BuildContext context, KLineEntity? previousEntity, KLineEntity entity)? infoDialogBuilder;
   final String Function(KLineEntity entity, bool isCrossLine)? dateFormatter;
   // It will be called when the screen scrolls to the end.
   // If true, it will be scrolled to the end of the right side of the screen.
@@ -346,7 +346,7 @@ class _KChartWidgetState extends State<KChartWidget> with TickerProviderStateMix
           top: 10,
           left: snapshot.data!.isLeft ? 10.0 : null,
           right: snapshot.data!.isLeft ? null : 10.0,
-          child: widget.infoDialogBuilder?.call(context, entity) ??
+          child: widget.infoDialogBuilder?.call(context, snapshot.data?.kLinePreviousEntity, entity) ??
               PopupInfoView(
                 entity: entity,
                 width: dialogWidth,

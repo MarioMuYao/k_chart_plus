@@ -311,7 +311,7 @@ class ChartPainter extends BaseChartPainter {
 
     dateTp.paint(canvas, Offset(x - textWidth / 2, y));
     //Long press to display the details of this data
-    sink.add(InfoWindowEntity(point, isLeft: isLeft));
+    sink.add(InfoWindowEntity(point, kLinePreviousEntity: getItem(index - 1), isLeft: isLeft));
   }
 
   @override

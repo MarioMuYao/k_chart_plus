@@ -101,7 +101,7 @@ class _MyHomePageState extends State<MyHomePage> {
               fixedLength: 4,
               verticalTextAlignment: VerticalTextAlignment.right,
               timeFormat: TimeFormat.YEAR_MONTH_DAY,
-              infoDialogBuilder: (context, entity) => Container(
+              infoDialogBuilder: (context, previousEntity, entity) => Container(
                 padding: const EdgeInsets.all(10),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
