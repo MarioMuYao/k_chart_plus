@@ -171,7 +171,11 @@ class _KChartWidgetState extends State<KChartWidget> with TickerProviderStateMix
             // if (!widget.isTrendLine && widget.onSecondaryTap != null && _painter.isInSecondaryRect(details.localPosition)) {
             //   widget.onSecondaryTap!();
             // }
-
+            if (isLongPress) {
+              isLongPress = false;
+              mInfoWindowStream.sink.add(null);
+              notifyChanged();
+            }
             if (!widget.isTrendLine && _painter.isInMainRect(details.localPosition)) {
               isOnTap = true;
               if (mSelectX != details.localPosition.dx && widget.isTapShowInfoDialog) {

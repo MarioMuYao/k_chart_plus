@@ -103,6 +103,7 @@ class _MyHomePageState extends State<MyHomePage> {
               timeFormat: TimeFormat.YEAR_MONTH_DAY,
               infoDialogBuilder: (context, previousEntity, entity) => Container(
                 padding: const EdgeInsets.all(10),
+                color: Colors.blue,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
