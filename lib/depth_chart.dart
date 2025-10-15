@@ -47,18 +47,20 @@ class _DepthChartState extends State<DepthChart> {
         isLongPress = false;
         setState(() {});
       },
-      child: CustomPaint(
-        size: Size(double.infinity, double.infinity),
-        painter: DepthChartPainter(
-          widget.bids,
-          widget.asks,
-          pressOffset,
-          isLongPress,
-          widget.baseUnit,
-          widget.quoteUnit,
-          widget.chartColors,
-          widget.offset,
-          widget.chartTranslations,
+      child: RepaintBoundary(
+        child: CustomPaint(
+          size: Size(double.infinity, double.infinity),
+          painter: DepthChartPainter(
+            widget.bids,
+            widget.asks,
+            pressOffset,
+            isLongPress,
+            widget.baseUnit,
+            widget.quoteUnit,
+            widget.chartColors,
+            widget.offset,
+            widget.chartTranslations,
+          ),
         ),
       ),
     );
