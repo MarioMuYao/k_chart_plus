@@ -1,4 +1,5 @@
 import 'dart:async' show StreamSink;
+import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import '../entity/info_window_entity.dart';
 import '../entity/k_line_entity.dart';
@@ -385,7 +386,7 @@ class ChartPainter extends BaseChartPainter {
           value >= (datas!.lastOrNull?.open ?? 0) ? this.chartColors.nowPriceUpColor : this.chartColors.nowPriceDnColor;
     //first draw the horizontal line
     double startX = 0;
-    final max = -mTranslateX + mWidth / scaleX;
+    final max = math.max(mWidth, -mTranslateX + mWidth / scaleX);
     final space = this.chartStyle.nowPriceLineSpan + this.chartStyle.nowPriceLineLength;
     while (startX < max) {
       canvas.drawLine(Offset(startX, y), Offset(startX + this.chartStyle.nowPriceLineLength, y), nowPricePaint);
