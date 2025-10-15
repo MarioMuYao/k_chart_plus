@@ -273,11 +273,9 @@ class _KChartWidgetState extends State<KChartWidget> with TickerProviderStateMix
           },
           child: Stack(
             children: <Widget>[
-              RepaintBoundary(
-                child: CustomPaint(
-                  size: Size(double.infinity, baseDimension.mDisplayHeight),
-                  painter: _painter,
-                ),
+              CustomPaint(
+                size: Size(double.infinity, baseDimension.mDisplayHeight),
+                painter: _painter,
               ),
               if (widget.showInfoDialog) _buildInfoDialog()
             ],
