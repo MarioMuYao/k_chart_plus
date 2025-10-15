@@ -414,7 +414,7 @@ abstract class BaseChartPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(BaseChartPainter oldDelegate) {
-    return false;
+    return true;
   }
 }
 
